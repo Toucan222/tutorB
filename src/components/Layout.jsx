@@ -9,13 +9,16 @@ const navigation = [
   { name: 'Students', href: '/students' },
   { name: 'Teachers', href: '/teachers' },
   { name: 'Rooms', href: '/rooms' },
+  { name: 'Billing', href: '/billing' },
+  { name: 'Student Example', href: '/student-example' },
+  { name: 'Teacher Example', href: '/teacher-example' },
 ]
 
 export default function Layout() {
   const location = useLocation()
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       <Disclosure as="nav" className="bg-white shadow-sm">
         {({ open }) => (
           <>
@@ -23,9 +26,7 @@ export default function Layout() {
               <div className="flex h-16 justify-between">
                 <div className="flex">
                   <div className="flex flex-shrink-0 items-center">
-                    <Link to="/" className="text-2xl font-bold text-blue-600">
-                      TutorBase
-                    </Link>
+                    <span className="text-xl font-bold text-blue-600">TutorBase</span>
                   </div>
                   <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                     {navigation.map((item) => (
@@ -35,7 +36,7 @@ export default function Layout() {
                         className={`inline-flex items-center px-1 pt-1 text-sm font-medium ${
                           location.pathname === item.href
                             ? 'border-b-2 border-blue-500 text-gray-900'
-                            : 'text-gray-500 hover:border-b-2 hover:border-gray-300 hover:text-gray-700'
+                            : 'border-b-2 border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                         }`}
                       >
                         {item.name}
@@ -65,7 +66,7 @@ export default function Layout() {
                     className={`block py-2 pl-3 pr-4 text-base font-medium ${
                       location.pathname === item.href
                         ? 'bg-blue-50 border-l-4 border-blue-500 text-blue-700'
-                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-700'
+                        : 'border-l-4 border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700'
                     }`}
                   >
                     {item.name}
@@ -77,9 +78,9 @@ export default function Layout() {
         )}
       </Disclosure>
 
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
         <Outlet />
-      </main>
+      </div>
     </div>
   )
 }
