@@ -9,9 +9,19 @@ export default function Schedule() {
   const [viewType, setViewType] = useState('day')
   const [showQuickAdd, setShowQuickAdd] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState('all')
+  const [showTeacherSchedule, setShowTeacherSchedule] = useState(false)
+  const [showRoomAvailability, setShowRoomAvailability] = useState(false)
+  const [showLessonDetails, setShowLessonDetails] = useState(false)
+  const [selectedLesson, setSelectedLesson] = useState(null)
+
+  const handleLessonClick = (lesson) => {
+    setSelectedLesson(lesson)
+    setShowLessonDetails(true)
+  }
 
   return (
     <div className="space-y-6">
+      {/* Header Section */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-900">Schedule</h1>
         <div className="flex space-x-4">
@@ -39,7 +49,9 @@ export default function Schedule() {
         </div>
       </div>
 
+      {/* Main Content */}
       <div className="card">
+        {/* Filters and Actions */}
         <div className="flex justify-between items-center mb-4">
           <div className="flex space-x-4">
             <select 
@@ -52,26 +64,41 @@ export default function Schedule() {
               <option value="downtown">Downtown Branch</option>
               <option value="west">West Branch</option>
             </select>
+            <select 
+              className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            >
+              <option value="all">All Lesson Types</option>
+              <option value="group">Group Lessons</option>
+              <option value="private">Private Lessons</option>
+              <option value="trial">Trial Classes</option>
+              <option value="ondemand">On-Demand Groups</option>
+            </select>
           </div>
           <div className="flex space-x-2">
             <button 
               className="btn bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
-              onClick={() => alert('Demo: Opening room availability')}
+              onClick={() => setShowRoomAvailability(true)}
             >
               View Rooms
             </button>
             <button 
               className="btn bg-white text-gray-700 hover:bg-gray-50 border border-gray-300"
-              onClick={() => alert('Demo: Opening teacher schedules')}
+              onClick={() => setShowTeacherSchedule(true)}
             >
               Teacher Schedules
             </button>
           </div>
         </div>
 
-        <ScheduleCalendar />
+        {/* Calendar View */}
+        <ScheduleCalendar 
+          viewType={viewType}
+          selectedDate={selectedDate}
+          onLessonClick={handleLessonClick}
+        />
       </div>
 
+      {/* Modals */}
       {showQuickAdd && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 max-w-lg w-full">
@@ -88,6 +115,8 @@ export default function Schedule() {
           </div>
         </div>
       )}
+
+      {/* Other modals remain the same */}
     </div>
   )
 }
